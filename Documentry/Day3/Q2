@@ -1,0 +1,35 @@
+#include <iostream>
+#include <vector>
+
+int lastRemaining(int n) {
+    std::vector<int> arr(n);
+    for (int i = 0; i < n; ++i) {
+        arr[i] = i + 1;
+    }
+
+    bool leftToRight = true;
+
+    while (arr.size() > 1) {
+        std::vector<int> newArr;
+        if (leftToRight) {
+            for (int i = 1; i < arr.size(); i += 2) {
+                newArr.push_back(arr[i]);
+            }
+        } else {
+            for (int i = arr.size() - 2; i >= 0; i -= 2) {
+                newArr.push_back(arr[i]);
+            }
+        }
+        arr = newArr;
+        leftToRight = !leftToRight;
+    }
+
+    return arr[0];
+}
+
+// Example usage
+int main() {
+    int n = 9; // Example input
+    std::cout << "Last remaining number: " << lastRemaining(n) << std::endl;
+    return 0;
+}
