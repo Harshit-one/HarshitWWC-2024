@@ -1,0 +1,35 @@
+#include <iostream>
+
+const int MOD = 1e9 + 7;
+
+long long minNonZeroProduct(int p) {
+    long long maxNum = (1LL << p) - 1; // 2^p - 1
+    long long half = maxNum / 2; // Half of the maximum number
+    long long product = 1;
+
+    // Calculate the product of all numbers from 1 to maxNum
+    for (long long i = 1; i <= half; ++i) {
+        product = (product * i) % MOD;
+    }
+
+    // Multiply by the maximum number
+    product = (product * maxNum) % MOD;
+
+    // Since we can swap bits, we can multiply by (maxNum - 1)^(maxNum / 2)
+    long long count = (maxNum - 1) % MOD;
+    long long exponent = (maxNum / 2) % (MOD - 1); // Fermat's Little Theorem
+    long long power = 1;
+
+    // Calculate (maxNum - 1)^(maxNum / 2) % MOD
+    while (exponent > 0) {
+        if (exponent % 2 == 1) {
+            power = (power * count) % MOD;
+        }
+        count = (count * count) % MOD;
+        exponent /= 2;
+    }
+
+    product = (product * power) % MOD;
+
+    return product;
+}
