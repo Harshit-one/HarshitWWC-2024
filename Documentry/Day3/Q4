@@ -1,0 +1,17 @@
+#include <iostream>
+#include <vector>
+
+int findTheWinner(int n, int k) {
+    std::vector<int> friends(n);
+    for (int i = 0; i < n; ++i) {
+        friends[i] = i + 1; // Initialize friends numbered from 1 to n
+    }
+
+    int index = 0; // Start from the first friend
+    while (friends.size() > 1) {
+        index = (index + k - 1) % friends.size(); // Find the index of the friend to eliminate
+        friends.erase(friends.begin() + index); // Remove the friend from the circle
+    }
+
+    return friends[0]; // The last remaining friend is the winner
+}
